@@ -2,9 +2,14 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include <locale.h>
+#include "./include/register.h"
 
 int main() {
     setlocale(LC_ALL, "Portuguese");
-    printf("Hello world.");
+    int option = 0;
+    while(option != 3) {
+        option = registerMenu();
+    }
+    system("clear");
     return 0;
 }
