@@ -16,25 +16,29 @@ bool login() {
     CREDENTIALS credentials, credentialsToMatch;
     bool correctEmail = false, correctPassword = false;
 
-    txt = fopen(ORIGINAL_FILENAME, "rb");       
-    fflush(stdin);
-    printf("Informe o email: ");
-    scanf("%s", credentials.email);
-    fflush(stdin);
-    printf("Informe a senha: ");
-    scanf("%s", credentials.password);
+    txt = fopen(ORIGINAL_FILENAME, "rb");
+    if(txt == NULL) {
+        printf("Falha na abertura de arquivo. \n");
+    }else {
+        fflush(stdin);
+        printf("Informe o email: ");
+        scanf("%s", credentials.email);
+        fflush(stdin);
+        printf("Informe a senha: ");
+        scanf("%s", credentials.password);
 
-    while(fread(&credentialsToMatch, sizeof(CREDENTIALS), 1, txt) == 1) {
-        if(strcmp(credentials.email, credentialsToMatch.email) == 0) {
-            correctEmail = true;
-            if(strcmp(credentials.password, credentialsToMatch.password) == 0) {
-                correctPassword = true;
-                break;
+        while(fread(&credentialsToMatch, sizeof(CREDENTIALS), 1, txt) == 1) {
+            if(strcmp(credentials.email, credentialsToMatch.email) == 0) {
+                correctEmail = true;
+                if(strcmp(credentials.password, credentialsToMatch.password) == 0) {
+                    correctPassword = true;
+                    break;
+                }
             }
         }
-    }
 
-    fclose(txt);
+        fclose(txt);
+    }       
 
     if(correctEmail && correctPassword) {
         return true;
@@ -82,7 +86,7 @@ void signup() {
 }
 
 int registerMenu() {
-    strcpy(ORIGINAL_FILENAME, "validation.txt");
+    strcpy(ORIGINAL_FILENAME, "./data/validation.txt");
 
     int option = 0;
     bool logged = false;

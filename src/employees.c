@@ -155,8 +155,8 @@ void getEmployee(EMPLOYEE employee) {
 }
 
 void employeesMenu() {
-    strcpy(ORIGINAL_FILENAME, "employees.txt");
-    strcpy(TMP_FILENAME, "tmp_employees.txt");
+    strcpy(ORIGINAL_FILENAME, "./data/employees.txt");
+    strcpy(TMP_FILENAME, "./data/tmp_employees.txt");
 
     EMPLOYEE employee;
     int option = 0;
