@@ -2,6 +2,7 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include <locale.h>
+#include <conio.h>
 #include "./include/register.h"
 #include "./include/types.h"
 
@@ -12,11 +13,12 @@ int main() {
     ORIGINAL_FILENAME = malloc(50);
     TMP_FILENAME = malloc(50);
 
-    setlocale(LC_ALL, "Portuguese");
+    setlocale(LC_ALL, "Portuguese-Brasil");
+    system("chcp 65001");
     int option = 0;
     while(option != 3) {
         option = registerMenu();
     }
-    system("clear");
+    system("cls");
     return 0;
 }

@@ -56,7 +56,7 @@ void signup() {
     txt = fopen(ORIGINAL_FILENAME, "ab");
     txtToMatch = fopen(ORIGINAL_FILENAME, "rb");
 
-    system("clear");
+    system("cls");
     if(txt == NULL) {
         printf("Falha na abertura de arquivo. \n");
     }else {
@@ -90,7 +90,7 @@ int registerMenu() {
 
     int option = 0;
     bool logged = false;
-    system("clear");
+    system("cls");
     printf("*** Sistema de gerenciamento *** \n\n");
     printf("1 - Entrar \n");
     printf("2 - Registrar \n");
@@ -98,15 +98,15 @@ int registerMenu() {
     scanf("%d", &option);
     switch(option) {
         case 1:
-            system("clear");
+            system("cls");
             while(!logged) {
                 logged = login();
                 if(!logged) {
-                    system("clear");
+                    system("cls");
                     printf("Credenciais não correlacionam. \n");
                 }
             }
-            system("clear");
+            system("cls");
             if(logged) menu();
             break;
         case 2:

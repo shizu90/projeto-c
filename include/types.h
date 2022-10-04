@@ -6,5 +6,6 @@ extern char * TMP_FILENAME;
 
 typedef struct credentials CREDENTIALS;
 typedef struct employee EMPLOYEE;
+typedef struct client CLIENT;
 
 #endif
