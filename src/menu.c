@@ -2,6 +2,7 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include "../include/menu.h"
+#include "../include/employees.h"
 
 void menu() {
     int option = 0;
@@ -15,6 +16,8 @@ void menu() {
     scanf("%d", &option);
     switch(option) {
         case 1:
+        system("clear");
+            employeesMenu();
             break;
         case 2: 
             break;

@@ -6,8 +6,6 @@
 #include "../include/register.h"
 #include "../include/menu.h"
 
-const char * ORIGINAL_FILENAME = "validation.txt";
-
 struct credentials {
     char email[250];
     char password[15];
@@ -75,7 +73,7 @@ void signup() {
             fclose(txt);
             fclose(txtToMatch);
         }else {
-            printf("Email já existente, tente outro.");
+            printf("Email já existente, tente outro. \n\n");
             fclose(txt);
             fclose(txtToMatch);
             signup();
@@ -84,6 +82,8 @@ void signup() {
 }
 
 int registerMenu() {
+    strcpy(ORIGINAL_FILENAME, "validation.txt");
+
     int option = 0;
     bool logged = false;
     system("clear");

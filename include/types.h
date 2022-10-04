@@ -1,9 +1,10 @@
 #ifndef TYPES
 #define TYPES
 
-extern const char * ORIGINAL_FILENAME;
-extern const char * TMP_FILENAME;
+extern char * ORIGINAL_FILENAME;
+extern char * TMP_FILENAME;
 
 typedef struct credentials CREDENTIALS;
+typedef struct employee EMPLOYEE;
 
 #endif
