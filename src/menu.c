@@ -5,6 +5,7 @@
 #include "../include/employees.h"
 #include "../include/clients.h"
 #include "../include/requests.h"
+#include "../include/record.h"
 
 void menu() {
     int option = 0;
@@ -32,6 +33,7 @@ void menu() {
                 requestsMenu(); 
                 break;
             case 4:
+                generateRecord();
                 break;
             case 5:
                 inMenu = false;
