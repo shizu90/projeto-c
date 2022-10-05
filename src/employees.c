@@ -6,13 +6,6 @@
 #include "../include/employees.h"
 #include "../include/utils.h"
 
-struct employee {
-    int id;
-    char name[60];
-    float salary;
-    char department[60];
-};
-
 void postEmployee(EMPLOYEE employee) {
     FILE * txt;
     txt = fopen(ORIGINAL_FILENAME, "ab");

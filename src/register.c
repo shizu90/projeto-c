@@ -2,14 +2,10 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <conio.h>
 #include "../include/types.h"
 #include "../include/register.h"
 #include "../include/menu.h"
-
-struct credentials {
-    char email[250];
-    char password[15];
-};
 
 bool login() {
     FILE * txt;
@@ -99,15 +95,16 @@ int registerMenu() {
     switch(option) {
         case 1:
             system("cls");
-            while(!logged) {
-                logged = login();
-                if(!logged) {
-                    system("cls");
-                    printf("Credenciais não correlacionam. \n");
-                }
+            logged = login();
+            if(!logged) {
+                system("cls");
+                printf("Credenciais não correlacionam. \n");
+                printf("Pressione qualquer tecla para voltar ao menu. \n");
+                getch();
+            }else {
+                system("cls");
+                menu();
             }
-            system("cls");
-            if(logged) menu();
             break;
         case 2:
             signup();

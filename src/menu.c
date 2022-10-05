@@ -4,6 +4,7 @@
 #include "../include/menu.h"
 #include "../include/employees.h"
 #include "../include/clients.h"
+#include "../include/requests.h"
 
 void menu() {
     int option = 0;
@@ -26,7 +27,9 @@ void menu() {
                 system("cls");
                 clientsMenu();
                 break;
-            case 3: 
+            case 3:
+                system("cls");
+                requestsMenu(); 
                 break;
             case 4:
                 break;

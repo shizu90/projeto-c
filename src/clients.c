@@ -6,12 +6,6 @@
 #include "../include/clients.h"
 #include "../include/utils.h"
 
-struct client {
-    int id;
-    char name[60];
-    int requestCount;
-};
-
 void postClient(CLIENT client) {
     FILE * txt;
     txt = fopen(ORIGINAL_FILENAME, "ab");
