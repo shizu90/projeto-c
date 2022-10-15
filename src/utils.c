@@ -1,4 +1,7 @@
+#include <stdbool.h>
 #include "../include/utils.h"
+
+bool admin = false;
 
 int getLines(FILE * txt, int sizeOfData) {
     int fileSize, linesInFile;

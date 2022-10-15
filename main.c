@@ -1,8 +1,6 @@
 #include <stdio.h>
-#include <stdbool.h>
 #include <stdlib.h>
 #include <locale.h>
-#include <conio.h>
 #include "./include/register.h"
 #include "./include/types.h"
 

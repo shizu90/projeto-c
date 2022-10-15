@@ -124,9 +124,9 @@ void getClient(CLIENT client) {
     }else {
         printf("Id | Nome | Total de pedidos \n\n");
         while(fread(&client, sizeof(CLIENT), 1, txt) == 1) {
-            printf("%d  ", client.id);
-            printf("%s  ", client.name);
-            printf("%d  \n", client.requestCount);
+            printf("%d    ", client.id);
+            printf("%s    ", client.name);
+            printf("%d\n", client.requestCount);
         }
         fclose(txt);
     }

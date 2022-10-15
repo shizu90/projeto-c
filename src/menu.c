@@ -6,6 +6,8 @@
 #include "../include/clients.h"
 #include "../include/requests.h"
 #include "../include/record.h"
+#include "../include/utils.h"
+#include "../include/register.h"
 
 void menu() {
     int option = 0;
@@ -17,7 +19,12 @@ void menu() {
         printf("2 - Consultar clientes \n");
         printf("3 - Consultar pedidos de clientes \n");
         printf("4 - Gerar relatório \n");
-        printf("5 - Sair \n");
+        if(admin) {
+            printf("5 - Gerenciar credenciais \n");
+            printf("6 - Sair \n");
+        }else {
+            printf("5 - Sair \n");
+        }
         scanf("%d", &option);
         switch(option) {
             case 1:
@@ -36,7 +43,15 @@ void menu() {
                 generateRecord();
                 break;
             case 5:
-                inMenu = false;
+                if(admin) {
+                    system("cls");
+                    credentialsMenu();
+                }else {
+                    inMenu = false;
+                }
+                break;
+            case 6:
+                if(admin) inMenu = false;
                 break;
             default:
                 system("cls");

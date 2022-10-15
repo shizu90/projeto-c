@@ -1,6 +1,8 @@
 #ifndef TYPES
 #define TYPES
 
+#include <stdbool.h>
+
 extern char * ORIGINAL_FILENAME;
 extern char * TMP_FILENAME;
 
@@ -42,6 +44,7 @@ struct employee {
 struct credentials {
     char email[250];
     char password[15];
+    bool admin;
 };
 
 #endif

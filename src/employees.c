@@ -135,10 +135,10 @@ void getEmployee(EMPLOYEE employee) {
     }else {
         printf("Id | Nome | Salário | Departamento \n\n");
         while(fread(&employee, sizeof(EMPLOYEE), 1, txt) == 1) {
-            printf("%d  ", employee.id);
-            printf("%s  ", employee.name);
-            printf("R$%.2f  ", employee.salary);
-            printf("%s  \n", employee.department);
+            printf("%d    ", employee.id);
+            printf("%s    ", employee.name);
+            printf("R$%.2f    ", employee.salary);
+            printf("%s\n", employee.department);
         }
         fclose(txt);
     }

@@ -221,13 +221,13 @@ void getRequest(REQUEST request) {
     }else {
         printf("Id | Preço | Data de inicio | Data de término | Id do cliente \n\n");
         while(fread(&request, sizeof(REQUEST), 1, txt) == 1) {
-            printf("%d  ", request.id);
-            printf("R$%2.f  ", request.price);
-            printf("%d/%d/%d  ", request.started.day, request.started.month, request.started.year);
+            printf("%d    ", request.id);
+            printf("R$%2.f    ", request.price);
+            printf("%d/%d/%d    ", request.started.day, request.started.month, request.started.year);
             if(request.ended.month == 0) {
-                printf("Em andamento  ");
-            }else printf("%d/%d/%d  ", request.ended.day, request.ended.month, request.ended.year);
-            printf("%d  \n", request.clientId);
+                printf("Em andamento    ");
+            }else printf("%d/%d/%d    ", request.ended.day, request.ended.month, request.ended.year);
+            printf("%d\n", request.clientId);
         }
         fclose(txt);
     }
