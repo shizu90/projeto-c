@@ -14,7 +14,7 @@ void generateRecord() {
     struct tm *gm_time = gmtime(&current);    
     float totalSalary = 0, totalRequestPrice = 0, difference = 0;
     char filename[70];
-    snprintf(filename, 70, "./data/record_%d.txt", gm_time->tm_mon + 1);
+    snprintf(filename, 70, "./data/%d%d%d_record.txt", gm_time->tm_mday, gm_time->tm_mon + 1, gm_time->tm_year + 1900);
     txt = fopen(filename, "w+");
     txtEmployees = fopen("./data/employees.txt", "rb");
     txtRequests = fopen("./data/requests.txt", "rb");
