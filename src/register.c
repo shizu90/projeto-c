@@ -153,14 +153,14 @@ void updateCredentials(CREDENTIALS credentials) {
                     printf("%s | %s |", credentials.email, credentials.password);
                     if(credentials.admin) {printf(" Sim\n\n");} else printf(" Não\n\n");
                     printf("Selecione o atributo para editar: \n");
-                    printf("1 - Email\n");
-                    printf("2 - Senha\n");
-                    printf("3 - Admin\n");
-                    printf("4 - Sair\n");
+                    arrowPointer(1, option);printf("1 - Email\n");
+                    arrowPointer(2, option);printf("2 - Senha\n");
+                    arrowPointer(3, option);printf("3 - Admin\n");
+                    arrowPointer(4, option);printf("4 - Sair\n");
                     key = getch();
                     option = changeOption(key, option, 4, 1);
 
-                    if(option == ENTER) switch(option) {
+                    if(key == ENTER) switch(option) {
                         case 1:
                             system(CLEAR);
                             printf("Email: ");
