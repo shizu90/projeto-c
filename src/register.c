@@ -210,10 +210,10 @@ void credentialsMenu() {
             printf("---------------------------------\n");
             printf("*** Gerenciamento de cadastro ***\n");
             printf("---------------------------------\n\n");
-            printf("1 - Listar todos os cadastros\n");
-            printf("2 - Editar cadastro\n");
-            printf("3 - Deletar cadastro\n");
-            printf("4 - Voltar\n");
+            arrowPointer(1, option);printf("1 - Listar todos os cadastros\n");
+            arrowPointer(2, option);printf("2 - Editar cadastro\n");
+            arrowPointer(3, option);printf("3 - Deletar cadastro\n");
+            arrowPointer(4, option);printf("4 - Voltar\n");
             key = getch();
             option = changeOption(key, option, 4, 1);
             

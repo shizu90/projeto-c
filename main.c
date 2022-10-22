@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <locale.h>
+#include <dirent.h>
 #include "./include/register.h"
 #include "./include/types.h"
 #include "./include/utils.h"
@@ -11,6 +12,12 @@ char * TMP_FILENAME;
 int main() {
     ORIGINAL_FILENAME = malloc(50);
     TMP_FILENAME = malloc(50);
+    DIR * data = opendir("data");
+    if(!data) {
+        system("mkdir data");
+    }else {
+        closedir(data);
+    }
 
     setlocale(LC_ALL, "Portuguese-Brasil");
     system("chcp 65001");
