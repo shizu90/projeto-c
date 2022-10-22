@@ -19,7 +19,7 @@ void generateRecord() {
     txtEmployees = fopen("./data/employees.txt", "rb");
     txtRequests = fopen("./data/requests.txt", "rb");
     if(txt == NULL || txtEmployees == NULL || txtRequests == NULL) {
-        printf("Falha ao gerar arquivo, tente adicionar alguns pedidos e funcionários. \n");
+        printf("<----Falha ao gerar arquivo, tente adicionar alguns pedidos e funcionários.---->\n");
     }else {
         while(fread(&employee, sizeof(EMPLOYEE), 1, txtEmployees) == 1) {
             totalSalary += employee.salary;
@@ -51,7 +51,7 @@ void generateRecord() {
         fclose(txtRequests);
 
         printf("Relatório mensal gerado na pasta data. Nome do arquivo: %s\n", filename);
-        printf("Pressione qualquer tecla para continuar: ");
+        printf("<----Pressione qualquer tecla para continuar---->");
         getch();
     }
 }

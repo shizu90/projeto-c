@@ -18,21 +18,22 @@ void postEmployee(EMPLOYEE employee) {
         printf("\n");
         fflush(stdin);
         printf("Digite o nome: ");
-        scanf("%s", employee.name);
+        gets(employee.name);
         fflush(stdin);
         printf("Digite o salário: ");
         scanf("%f", &employee.salary);
         fflush(stdin);
         printf("Digite o departamento: ");
-        scanf("%s", employee.department);
+        gets(employee.department);
 
         fwrite(&employee, sizeof(EMPLOYEE), 1, txt);
+        printf("<----Funcionário adicionado com sucesso.---->");
         fclose(txt);
     }
 }
 
 void updateEmployee(EMPLOYEE employee) {
-    int id = 0, option = 0, lines = 0;
+    int id = 0, option = 1, lines = 0, key = 0;
     bool inEdit = false;
     FILE * txt, * tmp;
     txt = fopen(ORIGINAL_FILENAME, "rb");
@@ -48,19 +49,20 @@ void updateEmployee(EMPLOYEE employee) {
                 if(id == employee.id) {
                     inEdit = true;
                     while(inEdit) {
-                        system("cls");
+                        system(CLEAR);
                         printf("%d | %s | R$%.2f | %s \n\n", employee.id, employee.name, employee.salary, employee.department);
                         printf("Selecione o atributo para a edição: \n");
-                        printf("1 - Nome \n");
-                        printf("2 - Salário \n");
-                        printf("3 - Departamento \n");
-                        printf("4 - Sair da edição \n");
-                        scanf("%d", &option);
-                        switch(option) {
+                        arrowPointer(1, option);printf("1 - Nome \n");
+                        arrowPointer(2, option);printf("2 - Salário \n");
+                        arrowPointer(3, option);printf("3 - Departamento \n");
+                        arrowPointer(4, option);printf("4 - Sair da edição \n");
+                        key = getch();
+                        option = changeOption(key, option, 4, 1);
+                        if(key == ENTER) switch(option) {
                             case 1:
                                 fflush(stdin);
                                 printf("Nome: ");
-                                scanf("%s", employee.name);
+                                gets(employee.name);
                                 break;
                             case 2:
                                 printf("Salário: ");
@@ -69,7 +71,7 @@ void updateEmployee(EMPLOYEE employee) {
                             case 3:
                                 fflush(stdin);
                                 printf("Departamento: ");
-                                scanf("%s", employee.department);
+                                gets(employee.department);
                                 break;
                             case 4:
                                 inEdit = false;
@@ -82,6 +84,7 @@ void updateEmployee(EMPLOYEE employee) {
                 }
                 fwrite(&employee, sizeof(EMPLOYEE), 1, tmp);
             }
+            printf("<----Funcionário atualizado com sucesso.---->\n");
             fclose(tmp);
             fclose(txt);
             remove(ORIGINAL_FILENAME);
@@ -97,7 +100,7 @@ void deleteEmployee(EMPLOYEE employee) {
     int id = 0, lines = 0;
     FILE * txt, * tmp;
     txt = fopen(ORIGINAL_FILENAME, "rb");
-    system("cls");
+    system(CLEAR);
     if(txt == NULL || tmp == NULL) {
         printf("Falha na abertura de arquivo. \n");
     }else {
@@ -116,6 +119,7 @@ void deleteEmployee(EMPLOYEE employee) {
                     continue;
                 }
             }
+            printf("<----Funcionário deletado com sucesso.---->\n");
             fclose(tmp);
             fclose(txt);
             remove(ORIGINAL_FILENAME);
@@ -149,38 +153,42 @@ void employeesMenu() {
     strcpy(TMP_FILENAME, "./data/tmp_employees.txt");
 
     EMPLOYEE employee;
-    int option = 0;
+    int option = 1, key = 0;
     bool inScreen = true;
     while(inScreen) {
-        system("cls");
-        printf("*** Gerenciamento de funcionários ***\n\n");
-        printf("1 - Salvar funcionário \n");
-        printf("2 - Editar funcionário \n");
-        printf("3 - Remover funcionário \n");
-        printf("4 - Listar funcionários \n");
-        printf("5 - Voltar \n");
-        scanf("%d", &option);
-        switch(option) {
+        system(CLEAR);
+        printf("-------------------------------------\n");
+        printf("*** Gerenciamento de funcionários ***\n");
+        printf("-------------------------------------\n\n");
+        arrowPointer(1, option);printf("1 - Salvar funcionário \n");
+        arrowPointer(2, option);printf("2 - Editar funcionário \n");
+        arrowPointer(3, option);printf("3 - Remover funcionário \n");
+        arrowPointer(4, option);printf("4 - Listar funcionários \n");
+        arrowPointer(5, option);printf("5 - Voltar \n");
+        key = getch();
+        option = changeOption(key, option, 5, 1);
+
+        if(key == ENTER) switch(option) {
             case 1:
-                system("cls");
+                system(CLEAR);
                 postEmployee(employee);
                 printf("\nPressione qualquer tecla para continuar: \n");
                 getch();
                 break;
             case 2:
-                system("cls");
+                system(CLEAR);
                 updateEmployee(employee);
                 printf("\nPressione qualquer tecla para continuar: \n");
                 getch();
                 break;
             case 3:
-                system("cls");
+                system(CLEAR);
                 deleteEmployee(employee);
                 printf("\nPressione qualquer tecla para continuar: \n");
                 getch();
                 break;
             case 4:
-                system("cls");
+                system(CLEAR);
                 getEmployee(employee);
                 printf("\nPressione qualquer tecla para continuar: \n");
                 getch();

@@ -54,7 +54,7 @@ void signup() {
     txt = fopen(ORIGINAL_FILENAME, "ab");
     txtToMatch = fopen(ORIGINAL_FILENAME, "rb");
 
-    system("cls");
+    system(CLEAR);
     if(txt == NULL) {
         printf("Falha na abertura de arquivo. \n");
     }else {
@@ -123,6 +123,7 @@ void deleteCredentials(CREDENTIALS credentials) {
                 fwrite(&credentials, sizeof(CREDENTIALS), 1, tmp);
             }else continue;
         }
+        printf("<----Usuário deletado com sucesso.---->\n");
         fclose(txt);
         fclose(tmp);
         remove(ORIGINAL_FILENAME);
@@ -135,7 +136,7 @@ void deleteCredentials(CREDENTIALS credentials) {
 void updateCredentials(CREDENTIALS credentials) {
     FILE * txt, * tmp;
     bool inEdit = false;
-    int option;
+    int option = 1, key = 0;
     txt = fopen(ORIGINAL_FILENAME, "rb");
     if(txt == NULL) {
         printf("Falha na abertura de arquivo. \n");
@@ -148,7 +149,7 @@ void updateCredentials(CREDENTIALS credentials) {
             if(strcmp(email, credentials.email) == 0) {
                 inEdit = true;
                 while(inEdit) {
-                    system("cls");
+                    system(CLEAR);
                     printf("%s | %s |", credentials.email, credentials.password);
                     if(credentials.admin) {printf(" Sim\n\n");} else printf(" Não\n\n");
                     printf("Selecione o atributo para editar: \n");
@@ -156,20 +157,22 @@ void updateCredentials(CREDENTIALS credentials) {
                     printf("2 - Senha\n");
                     printf("3 - Admin\n");
                     printf("4 - Sair\n");
-                    scanf("%d", &option);
-                    switch(option) {
+                    key = getch();
+                    option = changeOption(key, option, 4, 1);
+
+                    if(option == ENTER) switch(option) {
                         case 1:
-                            system("cls");
+                            system(CLEAR);
                             printf("Email: ");
                             scanf("%s", credentials.email);
                             break;
                         case 2:
-                            system("cls");
+                            system(CLEAR);
                             printf("Senha: ");
                             scanf("%s", credentials.password);
                             break;
                         case 3:
-                            system("cls");
+                            system(CLEAR);
                             char admin;
                             printf("Admin (s/n): ");
                             getchar();
@@ -187,6 +190,7 @@ void updateCredentials(CREDENTIALS credentials) {
             }
             fwrite(&credentials, sizeof(CREDENTIALS), 1, tmp);
         }
+        printf("<----Usuário atualizado com sucesso.---->\n");
         fclose(txt);
         fclose(tmp);
         remove(ORIGINAL_FILENAME);
@@ -199,31 +203,35 @@ void credentialsMenu() {
     strcpy(TMP_FILENAME, "./data/tmp_validation.txt");
     if(admin) {
         CREDENTIALS credentials;
-        int option;
+        int option = 1, key = 0;
         bool inScreen = true;
         while(inScreen) {
-            system("cls");
-            printf("*** Gerenciamento de cadastro ***\n\n");
+            system(CLEAR);
+            printf("---------------------------------\n");
+            printf("*** Gerenciamento de cadastro ***\n");
+            printf("---------------------------------\n\n");
             printf("1 - Listar todos os cadastros\n");
             printf("2 - Editar cadastro\n");
             printf("3 - Deletar cadastro\n");
             printf("4 - Voltar\n");
-            scanf("%d", &option);
-            switch(option) {
+            key = getch();
+            option = changeOption(key, option, 4, 1);
+            
+            if(option == ENTER) switch(option) {
                 case 1:
-                    system("cls");
+                    system(CLEAR);
                     getCredentials(credentials);
                     printf("\nPressione qualquer tecla para continuar: \n");
                     getch();
                     break;
                 case 2:
-                    system("cls");
+                    system(CLEAR);
                     updateCredentials(credentials);
                     printf("\nPressione qualquer tecla para continuar: \n");
                     getch();
                     break;
                 case 3:
-                    system("cls");
+                    system(CLEAR);
                     deleteCredentials(credentials);
                     printf("\nPressione qualquer tecla para continuar: \n");
                     getch();
@@ -242,37 +250,43 @@ void credentialsMenu() {
 int registerMenu() {
     strcpy(ORIGINAL_FILENAME, "./data/validation.txt");
 
-    int option = 0;
+    int option = 1, key = 0;
     bool logged = false;
-    system("cls");
-    printf("*** Sistema de gerenciamento *** \n\n");
-    printf("1 - Entrar \n");
-    printf("2 - Registrar \n");
-    printf("3 - Encerrar \n");
-    scanf("%d", &option);
-    switch(option) {
-        case 1:
-            system("cls");
-            logged = login();
-            if(!logged) {
-                system("cls");
-                printf("Credenciais não correlacionam. \n");
-                printf("Pressione qualquer tecla para voltar ao menu. \n");
-                getch();
-            }else {
-                system("cls");
-                menu();
-            }
-            break;
-        case 2:
-            signup();
-            break;
-        case 3:
-            break;
-        default:
-            printf("Opção inválida. \n");
-            registerMenu();
-            break;
+    while(key != ENTER) {
+        system(CLEAR);
+        printf("--------------------------------\n");
+        printf("*** Sistema de gerenciamento ***\n");
+        printf("--------------------------------\n\n");
+        arrowPointer(1, option);printf("1 - Entrar \n");
+        arrowPointer(2, option);printf("2 - Registrar \n");
+        arrowPointer(3, option);printf("3 - Encerrar \n");
+        key = getch();
+        option = changeOption(key, option, 3, 1);
+
+        if(key == ENTER) switch(option) {
+            case 1:
+                system(CLEAR);
+                logged = login();
+                if(!logged) {
+                    system(CLEAR);
+                    printf("Credenciais não correlacionam.\n");
+                    printf("<----Pressione qualquer tecla para voltar ao menu.---->\n");
+                    getch();
+                }else {
+                    system(CLEAR);
+                    menu();
+                }
+                break;
+            case 2:
+                signup();
+                break;
+            case 3:
+                break;
+            default:
+                printf("Opção inválida. \n");
+                registerMenu();
+                break;
+        }
     }
 
     return option;

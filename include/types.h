@@ -21,6 +21,7 @@ struct date {
 struct client {
     int id;
     char name[60];
+    char CPF[11];
     int requestCount;
 };
 

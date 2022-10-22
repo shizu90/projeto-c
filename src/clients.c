@@ -19,15 +19,19 @@ void postClient(CLIENT client) {
         printf("\n");
         fflush(stdin);
         printf("Digite o nome: ");
-        scanf("%s", client.name);
+        gets(client.name);
+        fflush(stdin);
+        printf("Digite o cpf: ");
+        gets(client.CPF);
 
+        printf("<----Cliente adicionado com sucesso.---->\n");
         fwrite(&client, sizeof(CLIENT), 1, txt);
         fclose(txt);
     }
 }
 
 void updateClient(CLIENT client) {
-    int id = 0, option = 0, lines = 0;
+    int id = 0, option = 1, lines = 0, key = 0;
     bool inEdit = false;
     FILE * txt, * tmp;
     txt = fopen(ORIGINAL_FILENAME, "rb");
@@ -43,24 +47,32 @@ void updateClient(CLIENT client) {
                 if(id == client.id) {
                     inEdit = true;
                     while(inEdit) {
-                        system("cls");
-                        printf("%d | %s | %d \n\n", client.id, client.name, client.requestCount);
+                        system(CLEAR);
+                        printf("%d | %s | %s | %d \n\n", client.id, client.name, client.CPF, client.requestCount);
                         printf("Selecione o atributo para a edição: \n");
-                        printf("1 - Nome \n");
-                        printf("2 - Total de pedidos \n");
-                        printf("3 - Sair da edição \n");
-                        scanf("%d", &option);
-                        switch(option) {
+                        arrowPointer(1, option);printf("1 - Nome \n");
+                        arrowPointer(2, option);printf("2 - Total de pedidos \n");
+                        arrowPointer(3, option);printf("3 - CPF \n");
+                        arrowPointer(4, option);printf("4 - Sair da edição \n");
+                        key = getch();
+                        option = changeOption(key, option, 4, 1);
+
+                        if(key == ENTER) switch(option) {
                             case 1:
                                 fflush(stdin);
                                 printf("Nome: ");
-                                scanf("%s", client.name);
+                                gets(client.name);
                                 break;
                             case 2:
                                 printf("Total de pedidos: ");
                                 scanf("%d", &client.requestCount);
                                 break;
                             case 3:
+                                fflush(stdin);
+                                printf("CPF: ");
+                                gets(client.CPF);
+                                break;
+                            case 4:
                                 inEdit = false;
                                 break;
                             default:
@@ -71,6 +83,7 @@ void updateClient(CLIENT client) {
                 }
                 fwrite(&client, sizeof(CLIENT), 1, tmp);
             }
+            printf("<----Cliente atualizado com sucesso.---->\n");
             fclose(tmp);
             fclose(txt);
             remove(ORIGINAL_FILENAME);
@@ -86,7 +99,7 @@ void deleteClient(CLIENT client) {
     int id = 0, lines = 0;
     FILE * txt, * tmp;
     txt = fopen(ORIGINAL_FILENAME, "rb");
-    system("cls");
+    system(CLEAR);
     if(txt == NULL || tmp == NULL) {
         printf("Falha na abertura de arquivo. \n");
     }else {
@@ -105,6 +118,7 @@ void deleteClient(CLIENT client) {
                     continue;
                 }
             }
+            printf("<----Cliente deletado com sucesso.---->\n");
             fclose(txt);
             fclose(tmp);
             remove(ORIGINAL_FILENAME);
@@ -122,10 +136,11 @@ void getClient(CLIENT client) {
     if(txt == NULL) {
         printf("Falha na abertura de arquivo. \n");
     }else {
-        printf("Id | Nome | Total de pedidos \n\n");
+        printf("Id | Nome | CPF | Total de pedidos \n\n");
         while(fread(&client, sizeof(CLIENT), 1, txt) == 1) {
             printf("%d    ", client.id);
             printf("%s    ", client.name);
+            printf("%s    ", client.CPF);
             printf("%d\n", client.requestCount);
         }
         fclose(txt);
@@ -137,38 +152,43 @@ void clientsMenu() {
     strcpy(TMP_FILENAME, "./data/tmp_clients.txt");
 
     CLIENT client;
-    int option = 0;
+    int option = 1;
+    int key = 0;
     bool inScreen = true;
     while(inScreen) {
-        system("cls");
-        printf("*** Gerenciamento de clientes ***\n\n");
-        printf("1 - Salvar cliente \n");
-        printf("2 - Editar cliente \n");
-        printf("3 - Remover cliente \n");
-        printf("4 - Listar clientes \n");
-        printf("5 - Voltar \n");
-        scanf("%d", &option);
-        switch(option) {
+        system(CLEAR);
+        printf("---------------------------------\n");
+        printf("*** Gerenciamento de clientes ***\n");
+        printf("---------------------------------\n\n");
+        arrowPointer(1, option);printf("1 - Salvar cliente \n");
+        arrowPointer(2, option);printf("2 - Editar cliente \n");
+        arrowPointer(3, option);printf("3 - Remover cliente \n");
+        arrowPointer(4, option);printf("4 - Listar clientes \n");
+        arrowPointer(5, option);printf("5 - Voltar \n");
+        key = getch();
+        option = changeOption(key, option, 5, 1);
+
+        if(key == ENTER) switch(option) {
             case 1:
-                system("cls");
+                system(CLEAR);
                 postClient(client);
                 printf("\nPressione qualquer tecla para continuar: \n");
                 getch();
                 break;
             case 2:
-                system("cls");
+                system(CLEAR);
                 updateClient(client);
                 printf("\nPressione qualquer tecla para continuar: \n");
                 getch();
                 break;
             case 3:
-                system("cls");
+                system(CLEAR);
                 deleteClient(client);
                 printf("\nPressione qualquer tecla para continuar: \n");
                 getch();
                 break;
             case 4:
-                system("cls");
+                system(CLEAR);
                 getClient(client);
                 printf("\nPression qualquer tecla para continuar: \n");
                 getch();

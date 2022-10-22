@@ -3,6 +3,7 @@
 #include <locale.h>
 #include "./include/register.h"
 #include "./include/types.h"
+#include "./include/utils.h"
 
 char * ORIGINAL_FILENAME;
 char * TMP_FILENAME;
@@ -17,6 +18,6 @@ int main() {
     while(option != 3) {
         option = registerMenu();
     }
-    system("cls");
+    system(CLEAR);
     return 0;
 }

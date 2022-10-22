@@ -16,7 +16,7 @@ void postRequest(REQUEST request, CLIENT client) {
     }else {
         tmpClients = fopen("./data/tmp_clients.txt", "ab");
         int linesInFile = getLines(txt, sizeof(REQUEST));
-        system("cls");
+        system(CLEAR);
         request.id = linesInFile + 1;
         linesInFile = request.id;
         printf("\n");
@@ -29,28 +29,20 @@ void postRequest(REQUEST request, CLIENT client) {
                     printf("Digite o total ganho/vai ganhar com o pedido: ");
                     scanf("%f", &request.price);
                     printf("Digite a data da inicialização do pedido: \n");
-                    printf("Dia: ");
-                    scanf("%d", &request.started.day);
-                    printf("Mês: ");
-                    scanf("%d", &request.started.month);
-                    printf("Ano: ");
-                    scanf("%d", &request.started.year);
-                    printf("Pedido foi entregue? (s/n): ");
+                    getDate(&request.started);
+                    printf("Pedido foi entregue? (s/n): \n");
                     if(getch() == 's') {
                         printf("Digite a data de término do pedido: \n");
-                        printf("Dia: ");
-                        scanf("%d", &request.ended.day);
-                        printf("Mês: ");
-                        scanf("%d", &request.ended.month);
-                        printf("Ano: ");
-                        scanf("%d", &request.ended.year);
+                        getDate(&request.ended);
                     }else {
                         request.ended.day = 0;request.ended.month = 0;request.ended.year = 0;
                     }
                     fwrite(&request, sizeof(REQUEST), 1, txt);
                 }
                 fwrite(&client, sizeof(CLIENT), 1, tmpClients);
+
             }
+            printf("<----Pedido adicionado com sucesso.---->\n");
         }else {
             printf("Cliente não está presente no sistema. \n");
         }
@@ -63,7 +55,7 @@ void postRequest(REQUEST request, CLIENT client) {
 }
 
 void updateRequest(REQUEST request, CLIENT client) {
-    int id = 0, option = 0, clientId = 0;
+    int id = 0, option = 1, clientId = 0, key = 0;
     bool inEdit = false;
     FILE * txt, * tmp, * txtClients, * tmpClients;
     txt = fopen(ORIGINAL_FILENAME, "rb");
@@ -79,45 +71,35 @@ void updateRequest(REQUEST request, CLIENT client) {
                 if(id == request.id) {
                     inEdit = true;
                     while(inEdit) {
-                        system("cls");
+                        system(CLEAR);
                         printf("%d | R$%2.f | %d/%d/%d | %d/%d/%d | %d \n\n", request.id, request.price, 
                         request.started.day, request.started.month, request.started.year, 
                         request.ended.day, request.ended.month, request.ended.year, request.clientId);
                         printf("Escolha o atributo para a edição: \n");
-                        printf("1 - Preço \n");
-                        printf("2 - Data de inicio \n");
-                        printf("3 - Data de termino \n");
-                        printf("4 - Id do cliente \n");
-                        printf("5 - Sair da edição \n");
-                        scanf("%d", &option);
-                        switch(option) {
+                        arrowPointer(1, option);printf("1 - Preço \n");
+                        arrowPointer(2, option);printf("2 - Data de inicio \n");
+                        arrowPointer(3, option);printf("3 - Data de termino \n");
+                        arrowPointer(4, option);printf("4 - Id do cliente \n");
+                        arrowPointer(5, option);printf("5 - Sair da edição \n");
+                        key = getch();
+                        option = changeOption(key, option, 5, 1);
+
+                        if(key == ENTER) switch(option) {
                             case 1:
-                                system("cls");
+                                system(CLEAR);
                                 printf("Preço: ");
                                 scanf("%f", &request.price);
                                 break;
                             case 2:
-                                system("cls");
-                                printf("Data de inicio: \n");
-                                printf("Dia: \n");
-                                scanf("%d", &request.started.day);
-                                printf("Mês: ");
-                                scanf("%d", &request.started.month);
-                                printf("Ano: ");
-                                scanf("%d", &request.started.year);
+                                system(CLEAR);
+                                getDate(&request.started);
                                 break;
                             case 3:
-                                system("cls");
-                                printf("Data de término: \n");
-                                printf("Dia: \n");
-                                scanf("%d", &request.ended.day);
-                                printf("Mês: ");
-                                scanf("%d", &request.ended.month);
-                                printf("Ano: ");
-                                scanf("%d", &request.ended.year);
+                                system(CLEAR);
+                                getDate(&request.ended);
                                 break;
                             case 4:
-                                system("cls");
+                                system(CLEAR);
                                 txtClients = fopen("./data/clients.txt", "rb");
                                 if(txtClients == NULL) {
                                     printf("Falha na abertura de arquivo. \n");
@@ -156,6 +138,7 @@ void updateRequest(REQUEST request, CLIENT client) {
                 }
                 fwrite(&request, sizeof(REQUEST), 1, tmp);
             }
+            printf("<----Pedido atualizado com sucesso.---->\n");
             fclose(tmp);
             fclose(txt);
             remove(ORIGINAL_FILENAME);
@@ -197,6 +180,7 @@ void deleteRequest(REQUEST request, CLIENT client) {
                     fwrite(&client, sizeof(CLIENT), 1, tmpClients);
                 }
             }
+            printf("<----Pedido deletado com sucesso.---->");
             fclose(tmp);
             fclose(tmpClients);
             fclose(txt);
@@ -239,38 +223,42 @@ void requestsMenu() {
 
     REQUEST request;
     CLIENT client;
-    int option = 0;
+    int option = 1, key = 0;
     bool inScreen = true;
     while(inScreen) {
-        system("cls");
-        printf("*** Gerenciamento de pedidos ***\n\n");
-        printf("1 - Salvar pedido \n");
-        printf("2 - Editar pedido \n");
-        printf("3 - Remover pedido \n");
-        printf("4 - Listar pedidos \n");
-        printf("5 - Voltar \n");
-        scanf("%d", &option);
-        switch(option) {
+        system(CLEAR);
+        printf("--------------------------------\n");
+        printf("*** Gerenciamento de pedidos ***\n");
+        printf("--------------------------------\n\n");
+        arrowPointer(1, option);printf("1 - Salvar pedido \n");
+        arrowPointer(2, option);printf("2 - Editar pedido \n");
+        arrowPointer(3, option);printf("3 - Remover pedido \n");
+        arrowPointer(4, option);printf("4 - Listar pedidos \n");
+        arrowPointer(5, option);printf("5 - Voltar \n");
+        key = getch();
+        option = changeOption(key, option, 5, 1);
+
+        if(key == ENTER) switch(option) {
             case 1:
-                system("cls");
+                system(CLEAR);
                 postRequest(request, client);
                 printf("\nPressione qualquer tecla para continuar: \n");
                 getch();
                 break;
             case 2:
-                system("cls");
+                system(CLEAR);
                 updateRequest(request, client);
                 printf("\nPressione qualquer tecla para continuar: \n");
                 getch();
                 break;
             case 3:
-                system("cls");
+                system(CLEAR);
                 deleteRequest(request, client);
                 printf("\nPressione qualquer tecla para continuar: \n");
                 getch();
                 break;
             case 4:
-                system("cls");
+                system(CLEAR);
                 getRequest(request);
                 printf("\nPressione qualquer tecla para continuar: \n");
                 getch();
