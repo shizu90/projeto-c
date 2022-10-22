@@ -217,7 +217,7 @@ void credentialsMenu() {
             key = getch();
             option = changeOption(key, option, 4, 1);
             
-            if(option == ENTER) switch(option) {
+            if(key == ENTER) switch(option) {
                 case 1:
                     system(CLEAR);
                     getCredentials(credentials);
