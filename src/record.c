@@ -12,7 +12,7 @@ void generateRecord() {
     REQUEST request;
     time_t current = time(NULL);
     struct tm *gm_time = gmtime(&current);    
-    float totalSalary = 0, totalRequestPrice = 0, difference = 0;
+    float totalSalary = 0, totalRequestPrice = 0, difference = 0, margin = 0;
     char filename[70];
     snprintf(filename, 70, "./data/%d%d%d_record.txt", gm_time->tm_mday, gm_time->tm_mon + 1, gm_time->tm_year + 1900);
     txt = fopen(filename, "w+");
@@ -29,6 +29,7 @@ void generateRecord() {
                 totalRequestPrice += request.price;
             }
         }
+        margin = ((totalRequestPrice - totalSalary)/totalRequestPrice)*100;
         difference = totalRequestPrice - totalSalary;
         fprintf(txt, "---------------------------------------------\n");
         fprintf(txt, "               RELATÓRIO MENSAL\n");
@@ -36,7 +37,8 @@ void generateRecord() {
         fprintf(txt, "           %s\n\n", ctime(&current));
         fprintf(txt, "Total dos salários: R$%.2f\n", totalSalary);
         fprintf(txt, "Total ganho com pedidos: R$%2.f\n", totalRequestPrice);
-        fprintf(txt, "Diferença: R$%.2f\n\n", difference);
+        fprintf(txt, "Diferença: R$%.2f\n", difference);
+        fprintf(txt, "Margem de lucro: %2.f%%\n\n", margin);
         if(difference < 0) {
             fprintf(txt, "Status: RUIM");
         }else {

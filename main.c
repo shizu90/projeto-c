@@ -25,6 +25,8 @@ int main() {
     while(option != 3) {
         option = registerMenu();
     }
+    free(ORIGINAL_FILENAME);
+    free(TMP_FILENAME);
     system(CLEAR);
     return 0;
 }

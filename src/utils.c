@@ -47,9 +47,17 @@ void arrowPointer(int currentPosition, int arrowPosition) {
 }
 
 int changeOption(int key, int option, int max, int min) {
-    if(key == ARROW_DOWN && option != max) {
-        return option+= 1;
-    }else if(key == ARROW_UP && option != min) {
-        return option-= 1;
+    if(key == ARROW_DOWN) {
+        if(option == max) {
+            return min;
+        }else {
+            return option+=1;
+        }
+    }else if(key == ARROW_UP) {
+        if(option == min) {
+            return max;
+        }else {
+            return option-=1;
+        }
     }else return option;
 }
